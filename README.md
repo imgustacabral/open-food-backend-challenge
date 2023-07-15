@@ -1,5 +1,5 @@
 # Projeto: Planejamento
-
+This is a challenge by [Coodesh](https://coodesh.com/)
 ## Etapa 1: Seleção da Tecnologia
 
 Para o desafio proposto, a stack tecnológica escolhida foi composta por NestJS, Prisma e PostgreSQL. Cada um desses componentes foi escolhido levando em conta as necessidades específicas do projeto.
