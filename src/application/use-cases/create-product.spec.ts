@@ -13,4 +13,17 @@ describe('Create Product', () => {
 
     expect(productsRepository.products[0]).toEqual(product);
   });
+  it('should be update the product when create other with same code', async () => {
+    const productsRepository = new InMemoryProductsRepository();
+    const createProduct = new CreateProduct(productsRepository);
+
+    const product = makeProduct();
+    const product2 = makeProduct();
+
+    await createProduct.execute({ product });
+    await createProduct.execute({ product: product2 });
+
+    expect(productsRepository.products[0]).toEqual(product2);
+    expect(productsRepository.products.length).toEqual(1);
+  });
 });
