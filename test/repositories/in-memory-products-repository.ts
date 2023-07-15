@@ -4,6 +4,15 @@ import { ProductsRepository } from '@application/repositories/products-repositor
 export class InMemoryProductsRepository implements ProductsRepository {
   public products: Product[] = [];
 
+  async findAll(pageNumber = 1, pageSize = 10): Promise<Product[]> {
+    pageNumber = Math.max(1, pageNumber);
+    pageSize = Math.max(1, pageSize);
+
+    const startIndex = (pageNumber - 1) * pageSize;
+
+    return this.products.slice(startIndex, startIndex + pageSize);
+  }
+
   async findByCode(code: number): Promise<Product | null> {
     const product = this.products.find((item) => item.code === code);
 
