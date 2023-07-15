@@ -6,8 +6,8 @@ export interface IProduct {
   importedT: Date;
   url: string;
   creator: string;
-  createdT: number;
-  lastModifiedT: number;
+  createdT: Date;
+  lastModifiedT: Date;
   productName: string;
   quantity: string;
   brands: string;
@@ -64,14 +64,14 @@ export class Product {
   }
 
   get createdT(): number {
-    return this.props.createdT;
+    return this.props.createdT.getTime();
   }
 
   get lastModifiedT(): number {
-    return this.props.lastModifiedT;
+    return this.props.lastModifiedT.getTime();
   }
 
-  set lastModifiedT(value: number) {
+  set lastModifiedT(value: Date) {
     this.props.lastModifiedT = value;
   }
 

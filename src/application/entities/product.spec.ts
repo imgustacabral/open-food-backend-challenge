@@ -18,7 +18,7 @@ describe('Product', () => {
   it('should be able to update the lastModifiedT of a product', () => {
     const product = makeProduct();
 
-    const newLastModifiedT = 456;
+    const newLastModifiedT = new Date();
     product.lastModifiedT = newLastModifiedT;
 
     expect(product.lastModifiedT).toBe(newLastModifiedT);
