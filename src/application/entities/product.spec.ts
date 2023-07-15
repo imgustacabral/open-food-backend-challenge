@@ -21,7 +21,7 @@ describe('Product', () => {
     const newLastModifiedT = new Date();
     product.lastModifiedT = newLastModifiedT;
 
-    expect(product.lastModifiedT).toBe(newLastModifiedT);
+    expect(product.lastModifiedT).toBe(newLastModifiedT.getTime());
   });
 
   it('should be able to change the productName of a product', () => {
