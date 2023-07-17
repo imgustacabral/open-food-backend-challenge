@@ -27,7 +27,7 @@ export class GetManyProductsController {
   @ApiQuery({
     name: 'take',
     required: false,
-    description: 'The number of items to take',
+    description: 'The number of items to take, limit 100',
     type: Number,
     example: 10,
   })
