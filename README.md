@@ -2,6 +2,16 @@
 
 Este é um desafio proposto pela [Coodesh](https://coodesh.com/).
 
+## Índice
+
+1. [Seleção da Tecnologia](#selecao-da-tecnologia)
+2. [Criação da Camada de Aplicação](#criacao-da-camada-de-aplicacao)
+3. [Configuração](#configuracao)
+4. [Criação da Camada de Infraestrutura](#criacao-da-camada-de-infraestrutura)
+5. [Instalação e Configuração Local](#instalacao-e-configuracao-local)
+6. [Executando com Docker e Docker Compose](#executando-com-docker-e-docker-compose)
+
+<a name="selecao-da-tecnologia"></a>
 ## 1. Seleção da Tecnologia
 
 A stack tecnológica escolhida para este desafio inclui NestJS, Prisma e PostgreSQL, selecionadas considerando as necessidades específicas do projeto.
@@ -23,6 +33,7 @@ Escolhido como ORM pela sua facilidade de uso e robusto suporte para PostgreSQL,
 
 Selecionado como o banco de dados devido à sua confiabilidade, eficiência, capacidade de lidar com grandes volumes de dados e também por ser um dos requisitos do desafio.
 
+<a name="criacao-da-camada-de-aplicacao"></a>
 ## 2. Criação da Camada de Aplicação
 
 A camada da aplicação foi criada para ser agnóstica a qualquer utilitário externo, como o banco de dados. Foram criados os domínios da aplicação (Product e Server Status), bem como suas entidades, além de analisar os endpoints da aplicação e os respectivos casos de uso. Os repositórios ProductsRepository, CronJobRepository e ServerStatusRepository representam os contratos das operações que devem existir em qualquer repositório externo.
@@ -39,10 +50,12 @@ Os casos de uso incluem:
 
 Os testes unitários utilizam uma abordagem de banco de dados em memória, realizando operações em um array na memória em todos casos de uso.
 
+<a name="configuracao"></a>
 ## 3. Configuração
 
 As variáveis de ambiente necessárias para a execução do projeto incluem DATABASE_URL, API_KEY e OPEN_FOOD_FACTS_BASE_URL. Utilizei o zod para a tipagem do process.env, criando um namespace global que declara o ProcessEnv conforme o parse realizado.
 
+<a name="criacao-da-camada-de-infraestrutura"></a>
 ## 4. Criação da Camada de Infraestrutura
 
 A camada de infraestrutura conta com três módulos:
@@ -67,3 +80,20 @@ No módulo Database, foram criados mappers do Prisma para a camada de domínio e
 - **Middleware**: Implementado para verificar a existência da API KEY, desempenhando a função de autorização na API.
 
 Decorators foram adicionados ao longo de cada etapa para auxiliar na documentação da API.
+
+<a name="instalacao-e-configuracao-local"></a>
+## 6. Instalação e Configuração Local
+
+1. Se estiver usando nvm, acesse o diretório do projeto e execute `nvm install`.
+2. Configure o `.env` com base no `.env.example`.
+3. Execute `npm install` para instalar as dependências do projeto.
+4. Execute `npx prisma migrate deploy` para aplicar as migrações do banco de dados.
+5. Execute `npx prisma generate` para gerar os artefatos do Prisma.
+6. Compile o projeto com `npm run build`.
+7. Inicie a aplicação com `npm run start:prod`.
+
+<a name="executando-com-docker-e-docker-compose"></a>
+## 7. Executando com Docker e Docker Compose
+
+1. Configure o `.env` com base no `.env.example`.
+2. Execute `docker-compose up` para iniciar o projeto em um contêiner Docker.
