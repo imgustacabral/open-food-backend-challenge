@@ -1,8 +1,7 @@
+import { CronModule } from '@infra/cron/cron.module';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [],
-  controllers: [],
-  providers: [],
+  imports: [CronModule],
 })
 export class AppModule {}
