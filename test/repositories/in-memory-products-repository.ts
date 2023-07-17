@@ -1,5 +1,5 @@
-import { Product } from '@application/entities/product';
-import { ProductsRepository } from '@application/repositories/products-repository';
+import { Product } from '@application/product/entities/product';
+import { ProductsRepository } from '@application/product/repositories/products-repository';
 
 export class InMemoryProductsRepository implements ProductsRepository {
   public products: Product[] = [];
@@ -13,7 +13,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
     return this.products.slice(startIndex, startIndex + pageSize);
   }
 
-  async findByCode(code: number): Promise<Product | null> {
+  async findByCode(code: string): Promise<Product | null> {
     const product = this.products.find((item) => item.code === code);
 
     if (!product) {
@@ -23,7 +23,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
     return product;
   }
 
-  async save(product: Product): Promise<void> {
+  async save(product: Product): Promise<Product> {
     const productIndex = this.products.findIndex(
       (item) => item.code === product.code,
     );
@@ -33,5 +33,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
     } else {
       this.products.push(product);
     }
+
+    return product;
   }
 }
