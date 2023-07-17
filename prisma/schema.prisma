@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              String        @id @default(uuid())
+  code            String        @unique
+  importedT       DateTime
+  url             String
+  creator         String
+  createdT        DateTime
+  lastModifiedT   DateTime
+  productName     String
+  quantity        String
+  brands          String
+  categories      String
+  labels          String
+  cities          String
+  purchasePlaces  String
+  stores          String
+  ingredientsText String
+  traces          String
+  servingSize     String
+  servingQuantity Float
+  nutriscoreScore Float
+  nutriscoreGrade String
+  mainCategory    String
+  imageUrl        String
+  status          ProductStatus
+
+  @@map("product")
+}
+
+model Crons {
+  id     String    @id @default(uuid())
+  name   String
+  runAt  DateTime
+  status JobStatus
+  error  String?
+}
+
+enum ProductStatus {
+  DRAFT
+  TRASH
+  PUBLISHED
+}
+
+enum JobStatus {
+  SUCCESS
+  FAILURE
+}
