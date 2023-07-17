@@ -38,3 +38,32 @@ Os casos de uso incluem:
 - **get-product-by-code**: para obter informações de um único produto.
 
 Os testes unitários utilizam uma abordagem de banco de dados em memória, realizando operações em um array na memória em todos casos de uso.
+
+## 3. Configuração
+
+As variáveis de ambiente necessárias para a execução do projeto incluem DATABASE_URL, API_KEY e OPEN_FOOD_FACTS_BASE_URL. Utilizei o zod para a tipagem do process.env, criando um namespace global que declara o ProcessEnv conforme o parse realizado.
+
+## 4. Criação da Camada de Infraestrutura
+
+A camada de infraestrutura conta com três módulos:
+
+- **CRON**: Serviço de importação de Products, programado para executar todos os dias às 3AM.
+- **Database**: Gerencia os ORMs e/ou repositórios externos.
+- **HTTP**: Permite a comunicação REST, com operações de GET, PUT e DELETE, e documentação com Swagger.
+
+### CRON
+
+O módulo CRON utilizou o agendador do próprio NestJS, com requisições feitas através do axios. A otimização do uso de memória foi um desafio, superado através do uso de streams do node, permitindo carregar o arquivo na memória aos poucos.
+
+### DATABASE
+
+No módulo Database, foram criados mappers do Prisma para a camada de domínio e vice-versa, além dos repositórios do Prisma que implementam os contratos da camada de aplicação.
+
+### HTTP
+
+- **DTOs**: Implementados com class-transformer e class-validator para garantir consistência e validação dos dados.
+- **View-Models**: Criados para estruturar e organizar os dados retornados pela API.
+- **Controllers**: Servem como o ponto de entrada para lidar com as solicitações HTTP.
+- **Middleware**: Implementado para verificar a existência da API KEY, desempenhando a função de autorização na API.
+
+Decorators foram adicionados ao longo de cada etapa para auxiliar na documentação da API.
