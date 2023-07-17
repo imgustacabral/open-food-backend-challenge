@@ -9,7 +9,7 @@ const config: Config = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
 
-  collectCoverageFrom: ['**/*.(t|j)s'],
+  collectCoverageFrom: ['**/*.ts'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
 
