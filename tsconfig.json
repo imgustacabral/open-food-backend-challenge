@@ -2,11 +2,12 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
+    "lib": ["ES2020", "DOM"],
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "es2020",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -22,7 +23,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@application/*": ["./src/application/*"],
-      "@helpers/*": ["./src/helpers/*"],
+      "@common/*": ["./src/common/*"],
       "@infra/*": ["./src/infra/*"],
       "@test/*": ["./test/*"]
     }
