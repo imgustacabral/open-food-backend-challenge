@@ -3,7 +3,6 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import axios from 'axios';
 import * as zlib from 'zlib';
 import * as readline from 'readline';
-import { Readable } from 'stream';
 import { CreateProduct } from '@application/product/services/create-product';
 import { ProductCronMapper } from '../mappers/product-cron-mapper';
 import { RegisterCronJob } from '@application/server-status/services/register-cron-job';
@@ -19,7 +18,7 @@ export class GetProductsDataCron {
     private readonly registerCronJob: RegisterCronJob,
   ) {}
 
-  @Cron(CronExpression.EVERY_5_MINUTES)
+  @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async handleCron() {
     try {
       const response = await axios.get(this.baseURL + 'index.txt');
@@ -30,16 +29,13 @@ export class GetProductsDataCron {
 
       for (const file of files) {
         this.logger.log(`Downloading file ${this.baseURL + file}`);
-        const { data } = await axios.get(this.baseURL + file, {
-          responseType: 'arraybuffer',
+
+        const response = await axios.get(this.baseURL + file, {
+          responseType: 'stream',
         });
 
-        const bufferStream = new Readable();
-        bufferStream.push(data);
-        bufferStream.push(null);
-
         const gunzip = zlib.createGunzip();
-        const stream = bufferStream.pipe(gunzip);
+        const stream = response.data.pipe(gunzip);
 
         let count = 0;
         const lineReader = readline.createInterface({
@@ -52,6 +48,7 @@ export class GetProductsDataCron {
             try {
               const product = ProductCronMapper.toDomain(JSON.parse(line));
               await this.createProduct.execute({ product });
+              this.logger.log(`Product ${count + 1} imported`);
             } catch (error: any) {
               this.logger.error(
                 `Failed to import product ${count + 1}: ${error.message}`,
@@ -71,6 +68,8 @@ export class GetProductsDataCron {
         await this.registerCronJob.execute({
           cronJob,
         });
+
+        this.logger.log(`File ${this.baseURL + file} imported`);
       }
     } catch (error: any) {
       this.logger.error(`Failure: ${error.message}`);
