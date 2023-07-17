@@ -1,10 +1,10 @@
-import { IProduct, Product } from '@application/entities/product';
+import { IProduct, Product } from '@application/product/entities/product';
 
 type Override = Partial<IProduct>;
 
 export function makeProduct(override: Override = {}) {
   return new Product({
-    code: 123,
+    code: '123',
     status: 'published',
     importedT: new Date(),
     url: 'url',
