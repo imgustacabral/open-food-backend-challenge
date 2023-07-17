@@ -37,3 +37,4 @@ Os casos de uso incluem:
 - **update-product-by-code**: para realizar updates no produto via HTTP.
 - **get-product-by-code**: para obter informações de um único produto.
 
+Os testes unitários utilizam uma abordagem de banco de dados em memória, realizando operações em um array na memória em todos casos de uso.
