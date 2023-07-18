@@ -35,13 +35,10 @@ export class Product {
   constructor(props: IProduct, id?: string) {
     this.props = props;
     this._id = id ?? randomUUID();
+    this.status ?? 'published';
 
     if (this.props.importedT === undefined) {
       this.props.importedT = new Date();
-    }
-
-    if (this.props.status === undefined) {
-      this.props.status = 'published';
     }
   }
 
