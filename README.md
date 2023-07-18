@@ -100,7 +100,9 @@ Decorators foram adicionados ao longo de cada etapa para auxiliar na documentaç
 4. Execute `npx prisma migrate deploy` para aplicar as migrações do banco de dados.
 5. Execute `npx prisma generate` para gerar os artefatos do Prisma.
 6. Compile o projeto com `npm run build`.
-7. Inicie a aplicação com `npm run start:prod`.
+7. Inicie a aplicação com `npm run start:prod`. 
+
+**Para acessar a documentação deve rodar `npm run start:dev` e acessar a rota /api**
 
 <a name="executando-com-docker-e-docker-compose"></a>
 ## 7. Executando com Docker e Docker Compose
