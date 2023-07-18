@@ -22,7 +22,7 @@ export class DeleteProductByCode {
       throw new ProductNotFound();
     }
 
-    product.status = 'trash';
+    product.delete();
 
     await this.productsRepository.save(product);
 
