@@ -5,6 +5,7 @@ const envVariables = z.object({
   DATABASE_URL: z.string(),
   API_KEY: z.string(),
   OPEN_FOOD_FACTS_BASE_URL: z.string(),
+  ELASTICSEARCH_URL = z.string(),
 });
 
 try {
