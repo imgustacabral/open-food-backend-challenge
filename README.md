@@ -33,6 +33,14 @@ Escolhido como ORM pela sua facilidade de uso e robusto suporte para PostgreSQL,
 
 Selecionado como o banco de dados devido à sua confiabilidade, eficiência, capacidade de lidar com grandes volumes de dados e também por ser um dos requisitos do desafio.
 
+### Elasticsearch
+
+Elasticsearch é uma ferramenta de pesquisa e análise de código aberto. Ele fornece uma maneira escalonável e fácil de pesquisar e analisar dados em tempo real é capaz de lidar com grandes volumes de dados de forma eficiente e rápida.
+
+### Kibana
+
+Permite a criação de dashboards personalizados para análise em tempo real dos dados armazenados no Elasticsearch.
+
 <a name="criacao-da-camada-de-aplicacao"></a>
 ## 2. Criação da Camada de Aplicação
 
@@ -40,6 +48,8 @@ A camada da aplicação foi criada para ser agnóstica a qualquer utilitário ex
 
 Os casos de uso incluem:
 
+- **index-product**: usado pelo cron job para indexar no elasticsearch.
+- **search-products**: retorna produtos indexados no elasticsearch relacionados ao texto passado na rota.
 - **create-product**: usado pelo cron job.
 - **register-cron-job**: registra quando o cronjob foi executado, seus erros, etc.
 - **get-server-status**: retorna as informações do status servidor.
@@ -96,4 +106,5 @@ Decorators foram adicionados ao longo de cada etapa para auxiliar na documentaç
 ## 7. Executando com Docker e Docker Compose
 
 1. Configure o `.env` com base no `.env.example`.
-2. Execute `docker-compose up` para iniciar o projeto em um contêiner Docker.
+2. Execute `docker volume create open-food-elasticsearch` para criar o volume do elasticsearch.
+3. Execute `docker-compose up` para iniciar o projeto em um contêiner Docker.
