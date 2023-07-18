@@ -6,11 +6,20 @@ import { ServerStatusRepository } from '@application/server-status/repositories/
 import { PrismaServerStatusRepository } from './prisma/repositories/prisma-server-status-repository';
 import { CronJobRepository } from '@application/server-status/repositories/cron-job-repository';
 import { PrismaCronJobRepository } from './prisma/repositories/prisma-cron-job-repository';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { ElasticsearchProductsRepository } from './elasticsearch/repositories/elasticsearch-products-repository';
+import { SearchProductsRepository } from '@application/product/repositories/search-repository';
 
 @Module({
+  imports: [
+    ElasticsearchModule.register({
+      node: process.env.ELASTICSEARCH_URL,
+    }),
+  ],
   controllers: [],
   providers: [
     PrismaService,
+    ElasticsearchProductsRepository,
     {
       provide: ServerStatusRepository,
       useClass: PrismaServerStatusRepository,
@@ -19,12 +28,20 @@ import { PrismaCronJobRepository } from './prisma/repositories/prisma-cron-job-r
       provide: ProductsRepository,
       useClass: PrismaProductsRepository,
     },
-
     {
       provide: CronJobRepository,
       useClass: PrismaCronJobRepository,
     },
+    {
+      provide: SearchProductsRepository,
+      useClass: ElasticsearchProductsRepository,
+    },
   ],
-  exports: [ProductsRepository, ServerStatusRepository, CronJobRepository],
+  exports: [
+    ProductsRepository,
+    ServerStatusRepository,
+    CronJobRepository,
+    SearchProductsRepository,
+  ],
 })
 export class DatabaseModule {}
