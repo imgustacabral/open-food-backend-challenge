@@ -13,6 +13,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ApiKeyGuard } from './guards/api-key-guard';
 import { GetServerStatusController } from './controllers/get-server-status-controller';
 import { GetServerStatus } from '@application/server-status/services/get-server-status';
+import { SearchProductController } from './controllers/search-product.controller';
 
 @Module({
   imports: [DatabaseModule],
@@ -22,6 +23,7 @@ import { GetServerStatus } from '@application/server-status/services/get-server-
     UpdateProductByCodeController,
     GetManyProductsController,
     GetServerStatusController,
+    SearchProductController,
   ],
   providers: [
     CreateProduct,
