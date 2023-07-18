@@ -7,7 +7,7 @@ import { CreateProduct } from '@application/product/services/create-product';
 import { ProductCronMapper } from '../mappers/product-cron-mapper';
 import { RegisterCronJob } from '@application/server-status/services/register-cron-job';
 import { CronJob } from '@application/server-status/entities/cron-job-entity';
-
+import { SearchProductsRepository } from '@application/product/repositories/search-repository';
 @Injectable()
 export class GetProductsDataCron {
   private readonly logger = new Logger(GetProductsDataCron.name);
@@ -16,6 +16,7 @@ export class GetProductsDataCron {
   constructor(
     private readonly createProduct: CreateProduct,
     private readonly registerCronJob: RegisterCronJob,
+    private readonly searchProductsRepository: SearchProductsRepository,
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
@@ -47,7 +48,11 @@ export class GetProductsDataCron {
           if (count < 100) {
             try {
               const product = ProductCronMapper.toDomain(JSON.parse(line));
-              await this.createProduct.execute({ product });
+              const addedProduct = await this.createProduct.execute({
+                product,
+              });
+
+              await this.searchProductsRepository.index(addedProduct);
               this.logger.log(`Product ${count + 1} imported`);
             } catch (error: any) {
               this.logger.error(
