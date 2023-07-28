@@ -25,3 +25,5 @@ jobs:
         file: ./Dockerfile.test
         load: true
         tags: imgustacabral/open-food-backend-challenge:test 
+    - name: Run Tests
+      run: docker run --rm imgustacabral/open-food-backend-challenge:test
